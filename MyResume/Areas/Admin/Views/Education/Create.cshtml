@@ -1,0 +1,27 @@
+﻿@model CreateEducationDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Yeni Eğitim Oluştur</h3>
+
+<form method="post">
+    <label>Üniversite Adı</label>
+    <input type="text" asp-for="SchoolName" class="form-control" />
+    <span asp-validation-for="SchoolName" class="text-danger"></span>
+    <br />
+    <label>Bölüm Adı</label>
+    <input type="text" asp-for="Department" class="form-control" />
+    <span asp-validation-for="Department" class="text-danger"></span>
+    <br />
+    <label>Başlama Yılı</label>
+    <input type="text" asp-for="StartYear" class="form-control" />
+    <span asp-validation-for="StartYear" class="text-danger"></span>
+    <br />
+    <label>Mezuniyet Yılı</label>
+    <input type="text" asp-for="FinishYear" class="form-control" />
+    <span asp-validation-for="FinishYear" class="text-danger"></span>
+    <br />
+    <button class="btn btn-primary"><i class="fas fa-save"></i> Kaydet</button>
+</form>

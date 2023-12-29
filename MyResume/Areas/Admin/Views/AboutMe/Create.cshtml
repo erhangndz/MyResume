@@ -1,0 +1,31 @@
+﻿@model CreateAboutMeDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Kişisel Bilgi Oluştur</h3>
+
+<form method="post">
+    <label>Ad Soyad</label>
+    <input type="text" asp-for="NameSurname" class="form-control" />
+    <span asp-validation-for="NameSurname" class="text-danger"></span>
+    <br />
+    <label>Unvan</label>
+    <input type="text" asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br />
+    <label>CV Url</label>
+    <input type="text" asp-for="CVUrl" class="form-control" />
+    <span asp-validation-for="CVUrl" class="text-danger"></span>
+    <br />
+    <label>Video Url</label>
+    <input type="text" asp-for="VideoUrl" class="form-control" />
+    <span asp-validation-for="VideoUrl" class="text-danger"></span>
+    <br />
+    <label>Görsel Url</label>
+    <input type="text" asp-for="ImageUrl" class="form-control" />
+    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    <br />
+    <button class="btn btn-primary" ><i class="fas fa-save"></i> Kaydet</button>
+</form>
