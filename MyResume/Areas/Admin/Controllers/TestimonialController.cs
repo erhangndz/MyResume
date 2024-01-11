@@ -40,6 +40,7 @@ namespace MyResume.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTestimonialDto createTestimonialDto)
         {
+            ModelState.Clear();
             var validator = new TestimonialValidator();
             
             var newTestimonial = _mapper.Map<Testimonial>(createTestimonialDto);
@@ -51,7 +52,7 @@ namespace MyResume.Areas.Admin.Controllers
                     ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
 
                 });
-                return View();
+                return View(createTestimonialDto);
 
             }
 

@@ -1,0 +1,57 @@
+﻿@model List<ResultTeamDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h3>Ekip Arkadaşları</h3>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Ad Soyad</th>
+        <th>Unvan</th>
+      
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td><img src="@item.ImageUrl" style="height:50px;width:50px;border-radius:50%" />   @item.NameSurname</td>
+            <td>@item.Title</td>
+          
+            <td>
+                <button id="@item.Id" data-teamname="@item.NameSurname" onclick="deleteTeam(this)" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </button>
+                <a asp-asp-controller="Team" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> </a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-asp-controller="Team" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Yeni Ekip Arkadaşı Oluştur</a>
+
+<script>
+
+    function deleteTeam(button) {
+
+        var id = button.getAttribute("id");
+        var name = button.getAttribute("data-teamname");
+
+        Swal.fire({
+
+            title: name + ' silinecektir. Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/Team/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

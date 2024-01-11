@@ -7,7 +7,7 @@
 
 <h3>Kişisel Bilgiler</h3>
 
-<table class="table table-hover table-striped">
+<table class="table table-hover table-bordered">
     <tr>
         <th>#</th>
         <th>Ad Soyad</th>
@@ -26,11 +26,33 @@
             <td><a href="@item.CVUrl" target="_blank">CV Linki</a> </td>
             <td><a href="@item.VideoUrl" target="_blank">Video Linki</a> </td>
             <td>
-                <a asp-asp-controller="AboutMe" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fas fa-trash"></i> Sil</a>
-                <a asp-asp-controller="AboutMe" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> Güncelle</a>
+                <button id="@item.Id" onclick="deleteAboutMe(this)" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </button>
+                <a asp-asp-controller="AboutMe" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> </a>
             </td>
         </tr>
     }
 </table>
 
 <a asp-asp-controller="AboutMe" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Yeni Bilgi Oluştur</a>
+
+<script>
+
+    function deleteAboutMe(button) {
+
+        var id = button.getAttribute("id");
+
+        Swal.fire({
+
+            title: 'Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/AboutMe/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

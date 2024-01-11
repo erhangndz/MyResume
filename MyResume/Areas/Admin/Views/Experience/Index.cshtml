@@ -1,0 +1,58 @@
+﻿
+@model List<ResultExperienceDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count= 0 ; 
+}
+
+<h3>Deneyim</h3>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>#</th>
+        <th>İş Unvanı</th>
+        <th>Şirket</th>
+        <th>Başlama-Bitiş</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td>@item.Title</td>
+            <td>@item.Company</td>
+            <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString()) - @item.EndDate</td>
+            <td>
+
+                <button id="@item.Id" onclick="deleteExperience(this)" type="submit" class="btn btn-outline-danger"> <i class="fas fa-trash"></i> Sil</button>
+                <a asp-asp-controller="Experience" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-asp-controller="Experience" asp-action="Create" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> Yeni Deneyim Oluştur</a>
+
+<script>
+
+    function deleteExperience(button) {
+
+        var id = button.getAttribute("id");
+
+        Swal.fire({
+
+            title: 'Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/Experience/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

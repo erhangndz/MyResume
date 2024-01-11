@@ -1,0 +1,66 @@
+﻿@model List<ResultProjectDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h3>Projeler</h3>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Resim</th>
+        <th>GitHub Linki</th>
+        <th>Proje Türü</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td><img src="@item.ImageUrl" style="height:50px;width:50px;border-radius:50%" /> </td>
+            <td> <a href="@item.GitHubUrl" target="_blank"> GitHub Linki</a></td>
+            <td>@item.Type</td>
+            <td>
+                <button id="@item.Id" onclick="deleteProject(this)"  class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                <a asp-controller="Project" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fas fa-pen"></i></a>
+            </td>
+        </tr>
+    }
+    <form method="post" asp-controller="Project" asp-action="Create">
+    <tr>
+        @{
+            count++;
+        }
+        <td>@count</td>
+        <td><input type="text" name="imageUrl" placeholder="Resim Url" /> </td>
+        <td><input type="text" name="githubUrl" placeholder="GitHub Url" /> </td>
+        <td><input type="text" name="projectType" placeholder="Proje Türü" /> </td>
+        <td><button class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+    </tr>
+    </form>
+</table>
+
+<script>
+
+    function deleteProject(button) {
+
+        var id = button.getAttribute("id");
+
+        Swal.fire({
+
+            title: 'Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/Project/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

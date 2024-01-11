@@ -1,0 +1,66 @@
+﻿@model List<ResultAboutSectionDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h3>Hakkımda</h3>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Başlık</th>
+        <th>Açıklama</th>
+        <th>Görsel 1</th>
+        <th>Görsel 2</th>
+        <th>Madde 1</th>
+        <th>Madde 2</th>
+        <th>Madde 3</th>
+
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td>  @item.Title</td>
+            <td>@(item.Description.Length < 50 ? item.Description : item.Description.Substring(0, 50) + "...")</td>
+            <td><img src="@item.AboutImage1" style="height:50px;width:50px;border-radius:50%" />  </td>
+            <td><img src="@item.AboutImage2" style="height:50px;width:50px;border-radius:50%" />  </td>
+            <td>@item.Item1 </td>
+            <td>@item.Item2 </td>
+            <td>@item.Item3 </td>
+            <td>
+                <button id="@item.Id" data-aboutsection="@item.Title" onclick="deleteAboutSection(this)" class="btn btn-outline-danger"><i class="fas fa-trash"></i> </button>
+                <a asp-asp-controller="AboutSection" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> </a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-asp-controller="AboutSection" asp-action="Create" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Yeni Hakkımda Oluştur</a>
+
+<script>
+
+    function deleteAboutSection(button) {
+
+        var id = button.getAttribute("id");
+        var aboutsection = button.getAttribute("data-aboutsection");
+
+        Swal.fire({
+
+            title: aboutsection + ' silinecektir. Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/AboutSection/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

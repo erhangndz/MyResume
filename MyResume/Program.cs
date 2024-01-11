@@ -21,7 +21,7 @@ builder.Services.AddScoped(typeof(IGenericService<>),typeof(GenericService<>));
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllersWithViews();
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddFluentValidationAutoValidation();
 
 
 

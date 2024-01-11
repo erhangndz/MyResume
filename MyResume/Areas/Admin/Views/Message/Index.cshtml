@@ -1,0 +1,64 @@
+﻿@model List<ResultMessageDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<h3>Gelen Mesajlar</h3>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Gönderen</th>
+        <th>Email</th>
+        <th>Konu</th>
+       
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <td>@item.Name</td>
+            <td>@item.Email</td>
+            <td>@item.Subject </td>
+           
+            <td>
+
+                <button id="@item.Id" data-messagename="@item.Name" onclick="deleteMessage(this)" type="submit" class="btn btn-outline-danger"> <i class="fas fa-trash"></i> </button>
+                <a asp-asp-controller="Message" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-comment"></i> Mesajı Aç </a>
+            </td>
+        </tr>
+    }
+    @{
+        count++;
+    }
+    
+</table>
+
+
+
+<script>
+
+    function deleteMessage(button) {
+
+        var id = button.getAttribute("id");
+        var name = button.getAttribute("data-messagename");
+
+        Swal.fire({
+
+            title: name + ' silinecektir. Silmek istediğinize emin misiniz?',
+            text: 'Bu mesajı silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/Message/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

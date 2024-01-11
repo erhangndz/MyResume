@@ -1,0 +1,27 @@
+﻿@model CreateExperienceDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Deneyim Oluştur</h3>
+
+<form method="post">
+    <label>İş Unvanı</label>
+    <input type="text" asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br />
+    <label>Şirket Adı</label>
+    <input type="text" asp-for="Company" class="form-control" />
+    <span asp-validation-for="Company" class="text-danger"></span>
+    <br />
+    <label>Başlama Tarihi</label>
+    <input type="date" asp-for="StartDate" class="form-control" />
+    <span asp-validation-for="StartDate" class="text-danger"></span>
+    <br />
+    <label>Bitiş Tarihi</label>
+    <input type="text" asp-for="EndDate" class="form-control" />
+    <span asp-validation-for="EndDate" class="text-danger"></span>
+    <br />
+    <button class="btn btn-primary"><i class="fas fa-save"></i> Kaydet</button>
+</form>

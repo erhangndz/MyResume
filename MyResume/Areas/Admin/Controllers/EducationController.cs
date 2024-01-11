@@ -33,15 +33,20 @@ namespace MyResume.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+    
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEducationDto createEducationDto)
+        public async Task<IActionResult> Create(string schoolName, string department, int startYear, int endYear)
         {
-            EducationValidator validator = new EducationValidator();
-            var newEducation = _mapper.Map<Education>(createEducationDto);
+
+            var newEducation = new Education
+            {
+                Department = department,
+                FinishYear = endYear,
+                SchoolName = schoolName,
+                StartYear = startYear,
+            };
+
+            var validator = new EducationValidator();
             var result = validator.Validate(newEducation);
             if (!result.IsValid)
             {
@@ -49,9 +54,8 @@ namespace MyResume.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
                 });
-                return View();
+                return RedirectToAction(nameof(Index));
             }
-            
 
             await _educationService.CreateAsync(newEducation);
             return RedirectToAction(nameof(Index));

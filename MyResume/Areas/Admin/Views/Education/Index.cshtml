@@ -1,4 +1,5 @@
-﻿@model List<ResultEducationDto>
+﻿@using EntityLayer.Entities
+@model List<ResultEducationDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -7,12 +8,13 @@
 
 <h3>Eğitimler</h3>
 
-<table class="table table-hover table-striped">
-    <tr>
+<table class="table table-hover table-bordered">
+    <tr> 
         <th>#</th>
         <th>Üniversite Adı</th>
         <th>Bölüm</th>
-        <th>Başlama-Mezuniyet</th>
+        <th>Başlama Yılı</th>
+        <th>Mezuniyet Yılı</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -22,14 +24,52 @@
             <th>@count</th>
             <td>@item.SchoolName</td>
             <td>@item.Department</td>
-            <td>@item.StartYear - @item.FinishYear</td>
+            <td>@item.StartYear </td>
+            <td>@item.FinishYear</td>
             <td>
-                <a asp-asp-controller="Education" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="fas fa-trash"></i> Sil</a>
-                <a asp-asp-controller="Education" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> Güncelle</a>
+
+                <button id="@item.Id" data-schoolname="@item.SchoolName" onclick="deleteEducation(this)" type="submit" class="btn btn-outline-danger"> <i class="fas fa-trash"></i> </button>
+                <a asp-asp-controller="Education" asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info"> <i class="fas fa-pen"></i> </a>
             </td>
         </tr>
     }
+    @{
+        count++;
+    }
+    <form asp-controller="Education" asp-action="Create" method="post">
+    <tr>
+        <th>@count</th>
+        <td><input type="text" name="schoolName" placeholder="Üniversite Adı" /> </td>
+        <td><input type="text" name="department" placeholder="Bölüm" /> </td>
+        <td><input type="number" name="startYear" placeholder="Başlama Yılı" />  </td>
+        <td><input type="number" name="endYear" placeholder="Mezuniyet Yılı" />  </td>
+        <td><button class="btn btn-primary" type="submit"><i class="fas fa-plus-circle"></i></button></td>
+    </tr>
+   
+    </form>
 </table>
 
-<a asp-asp-controller="Education" asp-action="Create" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> Yeni Eğitim Oluştur</a>
 
+
+<script>
+  
+    function deleteEducation(button) {
+
+        var id = button.getAttribute("id");
+        var schoolname = button.getAttribute("data-schoolname");
+
+        Swal.fire({
+
+            title: schoolname +' silinecektir. Silmek istediğinize emin misiniz?',
+            text: 'Bu öğeyi silerseniz geri alamazsınız!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/Admin/Education/Delete?id=" + id; // Yönlendirilecek URL'yi buraya yazın
+            }
+        });
+    }
+</script>

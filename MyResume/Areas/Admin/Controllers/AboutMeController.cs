@@ -3,6 +3,7 @@ using BusinessLayer.Validators;
 using DataAccessLayer.Services.Interfaces;
 using DtoLayer.DTOs.AboutMeDtos;
 using EntityLayer.Entities;
+using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NuGet.DependencyResolver;
@@ -43,14 +44,16 @@ namespace MyResume.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAboutMeDto createAboutMeDto)
         {
+            ModelState.Clear();
             var newAboutMe= _mapper.Map<AboutMe>(createAboutMeDto);
+
             var validator = new AboutMeValidator();
-            var result= await validator.ValidateAsync(newAboutMe);
+            var result = await validator.ValidateAsync(newAboutMe);
             if (!result.IsValid)
             {
                 result.Errors.ForEach(x =>
                 {
-                    ModelState.AddModelError("", x.ErrorMessage);
+                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
                 });
                 return View();
             }
