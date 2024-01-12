@@ -62,7 +62,6 @@ _**Proje Özellikleri**_
  _**Admin İçin Özellikler**_
 
 - Kullanıcılardan gelen mesajları görüntüleyebilir.
-- Araçlar, Kategoriler, Araç Durumları, Markalar, Araç Özellikleri, Araç Açıklamaları,
   Kişisel Bilgiler, Hakkımda, Eğitimler, Deneyim, Yetenekler, Hizmetler, Projeler, Referanslar, Ekip Arkadaşları, İletişim Bilgileri alanlarında CRUD işlemleri yapabilir.
 
 
