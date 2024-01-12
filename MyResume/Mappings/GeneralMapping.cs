@@ -64,9 +64,9 @@ namespace MyResume.Mappings
             CreateMap<UpdateContactDto,Contact>().ReverseMap();
 
 
-            CreateMap<UpdateMessageDto,Contact>().ReverseMap();
-            CreateMap<CreateMessageDto,Contact>().ReverseMap();
-            CreateMap<ResultMessageDto,Contact>().ReverseMap();
+            CreateMap<UpdateMessageDto,Message>().ReverseMap();
+            CreateMap<CreateMessageDto,Message>().ReverseMap();
+            CreateMap<ResultMessageDto,Message>().ReverseMap();
 
 
 

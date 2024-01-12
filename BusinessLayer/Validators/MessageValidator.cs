@@ -14,8 +14,8 @@ namespace BusinessLayer.Validators
         {
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email adresi boş bırakılamaz.");
             RuleFor(x => x.Email).EmailAddress().WithMessage("Geçerli bir email adresi girin.");
-            RuleFor(x => x.Subject).NotEmpty().WithMessage("Konu boş bırakılamaz.").MaximumLength(50).MinimumLength(5);
-            RuleFor(x => x.Content).NotEmpty().WithMessage("Mesaj alanı boş bırakılamaz.").MaximumLength(500);
+            RuleFor(x => x.Subject).NotEmpty().WithMessage("Konu boş bırakılamaz.");
+            RuleFor(x => x.Content).NotEmpty().WithMessage("Mesaj alanı boş bırakılamaz.");
             RuleFor(x => x.Name).NotEmpty().WithMessage("Ad Soyad boş bırakılamaz.");
         }
     }
